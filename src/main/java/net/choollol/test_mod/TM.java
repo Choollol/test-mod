@@ -41,14 +41,15 @@ public class TM {
         NeoForge.EVENT_BUS.register(this);
 
         TMItems.register(modEventBus);
+        TMCreativeModeTab.register(modEventBus);
+        TMBlocks.register(modEventBus);
+
         modEventBus.addListener(this::addCreative);
     }
     private void commonSetup(final FMLCommonSetupEvent event){
     }
     private void addCreative(BuildCreativeModeTabContentsEvent event){
-        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS){
-            event.accept(TMItems.TEST_ITEM_1);
-        }
+
     }
     @SubscribeEvent
     public void onServerStart(ServerStartingEvent event){
