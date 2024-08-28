@@ -1,5 +1,7 @@
 package net.choollol.test_mod;
 
+import net.choollol.test_mod.blocks.ModBlocks;
+import net.choollol.test_mod.items.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -25,7 +27,10 @@ public class ModCreativeModeTab {
     private static List<ItemStack> getItems(){
         List<ItemStack> items = new ArrayList<>();
         for (var itemVessel : ModItems.ITEM_MAP.values()){
-            items.add(new ItemStack(itemVessel.get().get()));
+            items.add(new ItemStack(itemVessel.asItem()));
+        }
+        for (var blockVessel : ModBlocks.BLOCK_MAP.values()){
+            items.add(new ItemStack(blockVessel.asItem()));
         }
         return items;
     }

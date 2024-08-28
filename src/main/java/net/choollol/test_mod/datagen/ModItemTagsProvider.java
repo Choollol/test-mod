@@ -1,16 +1,17 @@
 package net.choollol.test_mod.datagen;
 
-import net.choollol.test_mod.ModBlocks;
-import net.choollol.test_mod.ModItems;
+import net.choollol.test_mod.blocks.ModBlocks;
+import net.choollol.test_mod.items.ModItems;
 import net.choollol.test_mod.TM;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 public class ModItemTagsProvider extends ItemTagsProvider {
@@ -23,7 +24,12 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     protected void addTags(HolderLookup.Provider pProvider) {
         for (var itemVessel : ModItems.ITEM_MAP.values()){
             for (var tag : itemVessel.getTags()){
-                this.tag(tag).add(itemVessel.get().get());
+                this.tag(tag).add(itemVessel.asItem());
+            }
+        }
+        for (var blockVessel : ModBlocks.BLOCK_MAP.values()){
+            for (TagKey<Item> tag : blockVessel.getBlockItemVessel().getTags()){
+                this.tag(tag).add(blockVessel.asItem());
             }
         }
     }

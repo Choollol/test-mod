@@ -1,6 +1,7 @@
 package net.choollol.test_mod.datagen;
 
 import net.choollol.test_mod.TM;
+import net.choollol.test_mod.datagen.recipes.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -15,8 +16,7 @@ import java.util.concurrent.CompletableFuture;
 public class DataGenerators {
 
     @SubscribeEvent
-    public void gatherData(GatherDataEvent event){
-        TM.LOGGER.error("hahaha");
+    public static void gatherData(GatherDataEvent event){
         DataGenerator generator = event.getGenerator();
         PackOutput packOutput = generator.getPackOutput();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
@@ -25,9 +25,15 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), new ModBlockStateProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, existingFileHelper));
 
+        generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput,
+                new SwordRecipeProvider(packOutput), new MaterialRecipeProvider(packOutput),
+                new BlockRecipeProvider(packOutput)));
+
+        generator.addProvider(event.includeServer(), ModLootTableProvider.create(packOutput));
+
         ModBlockTagsProvider blockTagsProvider = generator.addProvider(event.includeServer(),
                 new ModBlockTagsProvider(packOutput, lookupProvider, existingFileHelper));
-        generator.addProvider(event.includeServer(), new ModItemTagsProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper));
+        generator.addProvider(event.includeServer(), new ModItemTagsProvider(packOutput, lookupProvider,
+                blockTagsProvider.contentsGetter(), existingFileHelper));
     }
-
 }

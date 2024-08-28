@@ -1,7 +1,8 @@
-package net.choollol.test_mod;
+package net.choollol.test_mod.items;
 
+import net.choollol.test_mod.TM;
 import net.choollol.test_mod.vessels.ItemVessel;
-import net.choollol.test_mod.items.Test_Item_2;
+import net.choollol.test_mod.items.custom.Test_Item_2;
 import net.choollol.test_mod.util.ModUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -20,46 +21,50 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ModItems {
+    public enum ModelType{
+        SIMPLE, HANDHELD
+    }
+
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(TM.ID);
-    /*public static final SortedMap<ResourceLocation, DeferredItem<? extends Item>> ITEM_MAP = new TreeMap<>();
-    public static final HashMap<TagKey<Item>, ArrayList<Item>> ITEM_TAGS = new HashMap<>();
-
-    public static final DeferredItem<Item> TEST_ITEM_1 = ITEMS.register("test_item_1",
-            () -> new Item(new Item.Properties()));
-    *//*public static final DeferredItem<Item> TEST_ITEM_2 = ITEMS.register("test_item_2",
-            () -> new Test_Item_2(Tiers.DIAMOND, 20, 5,
-                    new SwordItem.Properties().durability(16)));*//*
-    public static final DeferredItem<Test_Item_2> TEST_ITEM_2 = registerItem("test_item_2",
-            c -> new Test_Item_2(Tiers.STONE, 5, 2, new Item.Properties()),
-            Arrays.asList(ItemTags.AXES));
-            //new TagKey[]{ItemTags.AXES});
-
-    public static <T extends Item> DeferredItem<T> registerItem(String name, Function<Item.Properties, T> itemConstructor,
-                                                                List<TagKey<Item>> tags){
-        DeferredItem<T> deferredItem = ITEMS.registerItem(name, itemConstructor);
-        ITEM_MAP.put(new ResourceLocation(TM.ID, name), deferredItem);
-        return deferredItem;
-    }*/
 
     public static final HashMap<ResourceLocation, ItemVessel<? extends Item>> ITEM_MAP = new HashMap<>();
 
     public static final ItemVessel<Item> TEST_ITEM_1 = registerItem("Test Item 1", "test_item_1",
+            ModelType.SIMPLE,
             ItemParameters.of().itemConstructor(Item::new).addTags(Tags.Items.COBBLESTONE, Tags.Items.DYES_BLUE));
 
     public static final ItemVessel<Test_Item_2> TEST_ITEM_2 = registerItem("Test Item 2", "test_item_2",
+            ModelType.HANDHELD,
             ItemParameters.of().itemConstructor(() -> new Test_Item_2(Tiers.DIAMOND,
                     20, 5,
                     new SwordItem.Properties().durability(16)))
                     .addTags(ItemTags.COALS));
 
-    public static <T extends Item> ItemVessel<T> registerItem(String name, String id, ItemParameters<T> parameters){
+    public static <T extends Item> ItemVessel<T> registerItem(String name, String id, ModelType modelType,
+                                                              ItemParameters<T> parameters, boolean doAddToMap){
         ItemVessel<T> itemVessel = new ItemVessel<T>(
                 name, id,
-                ITEMS.registerItem(id, parameters.itemConstructor, parameters.properties),
+                ITEMS.registerItem(id, parameters.itemConstructor, parameters.properties), modelType,
                 parameters.tags
         );
-        ITEM_MAP.put(ModUtil.idFromPath(id), itemVessel);
+        if (doAddToMap) {
+            ITEM_MAP.put(ModUtil.idFromPath(id), itemVessel);
+        }
         return itemVessel;
+    }
+    //Adds to map
+    public static <T extends Item> ItemVessel<T> registerItem(String name, String id, ModelType modelType,
+                                                              ItemParameters<T> parameters){
+        return registerItem(name, id, modelType, parameters, true);
+    }
+    //ModelType.SIMPLE
+    public static <T extends Item> ItemVessel<T> registerItem(String name, String id, ItemParameters<T> parameters){
+        return registerItem(name, id, ModelType.SIMPLE, parameters);
+    }
+    //Does not add to map
+    public static <T extends Item> ItemVessel<T> registerBlockItem(String name, String id,
+                                                                   ItemParameters<T> parameters){
+        return registerItem(name, id, ModelType.SIMPLE, parameters, false);
     }
 
     public static void register(IEventBus eventBus){

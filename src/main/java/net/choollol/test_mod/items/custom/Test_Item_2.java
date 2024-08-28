@@ -1,13 +1,8 @@
-package net.choollol.test_mod.items;
+package net.choollol.test_mod.items.custom;
 
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.context.UseOnContext;
@@ -33,7 +28,7 @@ public class Test_Item_2 extends SwordItem {
 
                 context.getItemInHand().hurtAndBreak(1, context.getPlayer(),
                         player -> player.broadcastBreakEvent(player.getUsedItemHand()));
-                level.playSound(null, context.getClickedPos(), SoundEvents.ANVIL_USE, SoundSource.BLOCKS);
+                level.playSound(null, context.getClickedPos(), SoundEvents.BAMBOO_FALL, SoundSource.BLOCKS);
                 return InteractionResult.SUCCESS;
             }
         }

@@ -1,7 +1,8 @@
 package net.choollol.test_mod;
 
 import com.mojang.logging.LogUtils;
-import net.choollol.test_mod.datagen.DataGenerators;
+import net.choollol.test_mod.blocks.ModBlocks;
+import net.choollol.test_mod.items.ModItems;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
