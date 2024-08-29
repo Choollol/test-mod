@@ -1,8 +1,10 @@
 package net.choollol.test_mod;
 
 import com.mojang.logging.LogUtils;
-import net.choollol.test_mod.blocks.ModBlocks;
-import net.choollol.test_mod.items.ModItems;
+import net.choollol.test_mod.registries.ModBlockEntities;
+import net.choollol.test_mod.registries.ModBlocks;
+import net.choollol.test_mod.registries.ModCreativeModeTab;
+import net.choollol.test_mod.registries.ModItems;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -26,6 +28,7 @@ public class TM {
         ModItems.register(modEventBus);
         ModCreativeModeTab.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
 

@@ -1,15 +1,13 @@
-package net.choollol.test_mod.blocks;
+package net.choollol.test_mod.registries;
 
 import net.choollol.test_mod.TM;
 import net.choollol.test_mod.blocks.custom.*;
-import net.choollol.test_mod.items.ModItems;
 import net.choollol.test_mod.vessels.BlockVessel;
 import net.choollol.test_mod.util.ModTags;
 import net.choollol.test_mod.util.ModUtil;
 import net.choollol.test_mod.vessels.ItemVessel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

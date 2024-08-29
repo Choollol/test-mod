@@ -1,6 +1,6 @@
 package net.choollol.test_mod.datagen;
 
-import net.choollol.test_mod.items.ModItems;
+import net.choollol.test_mod.registries.ModItems;
 import net.choollol.test_mod.TM;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;

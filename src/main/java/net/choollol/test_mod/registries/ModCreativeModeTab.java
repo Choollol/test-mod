@@ -1,11 +1,9 @@
-package net.choollol.test_mod;
+package net.choollol.test_mod.registries;
 
-import net.choollol.test_mod.blocks.ModBlocks;
-import net.choollol.test_mod.items.ModItems;
+import net.choollol.test_mod.TM;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;

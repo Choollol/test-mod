@@ -1,13 +1,11 @@
 package net.choollol.test_mod.datagen.recipes;
 
-import net.choollol.test_mod.blocks.ModBlocks;
-import net.choollol.test_mod.items.ModItems;
+import net.choollol.test_mod.registries.ModBlocks;
+import net.choollol.test_mod.registries.ModItems;
 import net.choollol.test_mod.util.RecipeHelper;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.neoforged.neoforge.common.Tags;
 
 public class BlockRecipeProvider extends ModRecipeProvider {

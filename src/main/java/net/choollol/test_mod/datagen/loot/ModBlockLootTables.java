@@ -1,17 +1,11 @@
 package net.choollol.test_mod.datagen.loot;
 
-import net.choollol.test_mod.blocks.ModBlocks;
-import net.choollol.test_mod.vessels.BlockVessel;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.choollol.test_mod.registries.ModBlocks;
 import net.minecraft.data.loot.BlockLootSubProvider;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Set;
 
 public class ModBlockLootTables extends BlockLootSubProvider {

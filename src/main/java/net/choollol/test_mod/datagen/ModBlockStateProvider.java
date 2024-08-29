@@ -1,7 +1,7 @@
 package net.choollol.test_mod.datagen;
 
 import net.choollol.test_mod.TM;
-import net.choollol.test_mod.blocks.ModBlocks;
+import net.choollol.test_mod.registries.ModBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;

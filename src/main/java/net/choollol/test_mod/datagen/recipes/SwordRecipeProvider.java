@@ -1,8 +1,6 @@
 package net.choollol.test_mod.datagen.recipes;
 
-import net.choollol.test_mod.TM;
-import net.choollol.test_mod.items.ModItems;
-import net.minecraft.advancements.CriterionTrigger;
+import net.choollol.test_mod.registries.ModItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;

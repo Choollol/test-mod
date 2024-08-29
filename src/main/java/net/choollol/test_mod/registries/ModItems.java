@@ -1,4 +1,4 @@
-package net.choollol.test_mod.items;
+package net.choollol.test_mod.registries;
 
 import net.choollol.test_mod.TM;
 import net.choollol.test_mod.vessels.ItemVessel;

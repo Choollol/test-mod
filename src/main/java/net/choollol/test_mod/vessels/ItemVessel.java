@@ -1,9 +1,8 @@
 package net.choollol.test_mod.vessels;
 
-import net.choollol.test_mod.items.ModItems;
+import net.choollol.test_mod.registries.ModItems;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.ArrayList;
