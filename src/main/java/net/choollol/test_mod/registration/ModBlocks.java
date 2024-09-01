@@ -1,4 +1,4 @@
-package net.choollol.test_mod.registries;
+package net.choollol.test_mod.registration;
 
 import net.choollol.test_mod.TM;
 import net.choollol.test_mod.blocks.custom.*;

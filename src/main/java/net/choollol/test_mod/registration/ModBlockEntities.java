@@ -1,10 +1,8 @@
-package net.choollol.test_mod.registries;
+package net.choollol.test_mod.registration;
 
 import net.choollol.test_mod.TM;
 import net.choollol.test_mod.blocks.blockentities.TestBarrelEntity;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;

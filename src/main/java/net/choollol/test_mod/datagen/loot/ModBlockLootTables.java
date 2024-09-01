@@ -1,6 +1,6 @@
 package net.choollol.test_mod.datagen.loot;
 
-import net.choollol.test_mod.registries.ModBlocks;
+import net.choollol.test_mod.registration.ModBlocks;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;

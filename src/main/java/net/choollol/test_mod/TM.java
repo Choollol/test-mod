@@ -1,10 +1,10 @@
 package net.choollol.test_mod;
 
 import com.mojang.logging.LogUtils;
-import net.choollol.test_mod.registries.ModBlockEntities;
-import net.choollol.test_mod.registries.ModBlocks;
-import net.choollol.test_mod.registries.ModCreativeModeTab;
-import net.choollol.test_mod.registries.ModItems;
+import net.choollol.test_mod.registration.ModBlockEntities;
+import net.choollol.test_mod.registration.ModBlocks;
+import net.choollol.test_mod.registration.ModCreativeModeTab;
+import net.choollol.test_mod.registration.ModItems;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;

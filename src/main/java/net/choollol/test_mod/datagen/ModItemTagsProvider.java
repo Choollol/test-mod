@@ -1,7 +1,7 @@
 package net.choollol.test_mod.datagen;
 
-import net.choollol.test_mod.registries.ModBlocks;
-import net.choollol.test_mod.registries.ModItems;
+import net.choollol.test_mod.registration.ModBlocks;
+import net.choollol.test_mod.registration.ModItems;
 import net.choollol.test_mod.TM;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;

@@ -2,6 +2,7 @@ package net.choollol.test_mod.blocks.custom;
 
 import net.choollol.test_mod.blocks.blockentities.TestBarrelEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;

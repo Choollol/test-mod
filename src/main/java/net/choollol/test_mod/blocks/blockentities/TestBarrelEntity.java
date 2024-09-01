@@ -1,7 +1,7 @@
 package net.choollol.test_mod.blocks.blockentities;
 
-import net.choollol.test_mod.TM;
-import net.choollol.test_mod.registries.ModBlockEntities;
+import net.choollol.test_mod.registration.ModBlockEntities;
+import net.choollol.test_mod.screens.TestBarrelMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -18,6 +18,7 @@ public class TestBarrelEntity extends BlockEntity implements MenuProvider {
 
     private ItemStackHandler itemStackHandler = new ItemStackHandler(2);
 
+    // ItemStackHandler indices
     private final int STACK_SIZE_MODIFIER = 0;
     private final int ITEM_STACK = 1;
 
@@ -32,16 +33,18 @@ public class TestBarrelEntity extends BlockEntity implements MenuProvider {
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return null;
+        return new TestBarrelMenu(null, pPlayerInventory, pContainerId);
     }
 
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
+        pTag.put("inventory", itemStackHandler.serializeNBT());
     }
 
     @Override
     public void load(CompoundTag pTag) {
         super.load(pTag);
+        itemStackHandler.deserializeNBT(pTag.getCompound("inventory"));
     }
 }

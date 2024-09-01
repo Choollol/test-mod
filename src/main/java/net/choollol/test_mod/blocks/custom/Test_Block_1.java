@@ -1,6 +1,6 @@
 package net.choollol.test_mod.blocks.custom;
 
-import net.choollol.test_mod.registries.ModItems;
+import net.choollol.test_mod.registration.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
