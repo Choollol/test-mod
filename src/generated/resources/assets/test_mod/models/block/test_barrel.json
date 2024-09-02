@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "test_mod:block/test_barrel/test_barrel_end",
+    "side": "test_mod:block/test_barrel/test_barrel_side"
+  }
+}

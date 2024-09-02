@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "T": {
+      "item": "test_mod:test_item_1"
+    }
+  },
+  "pattern": [
+    " D ",
+    " D ",
+    " T "
+  ],
+  "result": {
+    "item": "test_mod:test_item_2"
+  }
+}

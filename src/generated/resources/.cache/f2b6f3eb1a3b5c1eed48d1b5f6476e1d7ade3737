@@ -1,0 +1,5 @@
+// 1.20.4	2024-09-01T11:58:27.8209557	Tags for minecraft:item mod id test_mod
+408b86339b264f9e15e0e62a7435332dff37d841 data/forge/tags/items/cobblestone.json
+0de92a8e78b7ffc5522aefb3f9f65cf9dd779dab data/forge/tags/items/dyes/blue.json
+ad0906f77e3461681ee452d7895e5f5f6c382c20 data/forge/tags/items/ingots/iron.json
+b12a3cf60b43ec081287ce682b234323afc165e6 data/minecraft/tags/items/coals.json

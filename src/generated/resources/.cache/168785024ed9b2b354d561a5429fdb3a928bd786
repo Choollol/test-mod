@@ -1,0 +1,10 @@
+// 1.20.4	2024-09-01T11:58:27.8229919	Block States: test_mod
+aff0cb8edac017aa751944f60650237e84e0d7c0 assets/test_mod/blockstates/test_barrel.json
+3c89685e31e56b51bd2f14fa294b6c8d3f17056c assets/test_mod/blockstates/test_block_1.json
+a062d133754123bdc44eaf2c604ccae9ad7e72d8 assets/test_mod/blockstates/test_block_2.json
+c39f11507cbbf507f0a688875417ad945ba9a1c6 assets/test_mod/models/block/test_barrel.json
+65d1de1cb82d72c7a4d722104801c1d835a878c5 assets/test_mod/models/block/test_block_1.json
+f97668399e386c0b5faa5d75ef684fba4468150f assets/test_mod/models/block/test_block_2.json
+03953dcc2c6aed2022098f6b30af30700f3ecff2 assets/test_mod/models/item/test_barrel.json
+28e2c370a3542842fb207295409335f058d1df73 assets/test_mod/models/item/test_block_1.json
+e37bad5f0da49782c8fad9cbb729ac707f4aeea0 assets/test_mod/models/item/test_block_2.json
