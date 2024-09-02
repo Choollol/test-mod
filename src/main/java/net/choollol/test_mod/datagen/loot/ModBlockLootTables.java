@@ -15,8 +15,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        dropSelf(ModBlocks.TEST_BLOCK_1.asBlock());
-        dropSelf(ModBlocks.TEST_BLOCK_2.asBlock());
+        ModBlocks.BLOCK_MAP.forEach((resourceLocation, blockVessel) -> dropSelf(blockVessel.asBlock()));
     }
 
     @Override

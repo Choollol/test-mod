@@ -1,32 +1,39 @@
-package net.choollol.test_mod.screens;
+package net.choollol.test_mod.menus;
 
-import net.choollol.test_mod.registration.ModBlocks;
 import net.choollol.test_mod.vessels.BlockVessel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
-import org.jetbrains.annotations.Nullable;
 
 public class ModMenu extends AbstractContainerMenu {
+
+    private int index = 0;
 
     protected Level level;
     protected BlockEntity blockEntity;
 
-    private static int index = 0;
+    protected final ContainerLevelAccess access;
 
-    protected ModMenu(@Nullable MenuType<?> pMenuType, Inventory inv, int pContainerId) {
-        super(pMenuType, pContainerId);
+    public ModMenu(MenuType<?> pMenuType, int pContainerId, Inventory inv, int slotCount) {
+        this(pMenuType, pContainerId, inv, new ItemStackHandler(slotCount), ContainerLevelAccess.NULL);
+    }
+    public ModMenu(MenuType<?> pMenuType, int pContainerId, Inventory inv, IItemHandler dataInventory) {
+        this(pMenuType, pContainerId, inv, dataInventory, ContainerLevelAccess.NULL);
+    }
+    public ModMenu(MenuType<?> menuType, int containerId, Inventory inv,
+                   IItemHandler dataInventory, ContainerLevelAccess containerLevelAccess){
+        super(menuType, containerId);
+        index = 0;
         addPlayerInventoryAndHotbar(inv);
+        this.access = containerLevelAccess;
+        //addDataSlot(dataSingle);
     }
 
     private static final int HOTBAR_SLOT_COUNT = 9;
@@ -76,9 +83,10 @@ public class ModMenu extends AbstractContainerMenu {
         return false;
     }
 
-    public boolean stillValid(Player pPlayer, BlockVessel blockVessel) {
-        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                pPlayer, blockVessel.asBlock());
+    public <T extends Block> boolean stillValid(Player pPlayer, BlockVessel<T> blockVessel) {
+        /*return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
+                pPlayer, blockVessel.asBlock());*/
+        return AbstractContainerMenu.stillValid(access, pPlayer, blockVessel.asBlock());
     }
 
     private void addPlayerInventoryAndHotbar(Inventory playerInventory) {
@@ -92,8 +100,8 @@ public class ModMenu extends AbstractContainerMenu {
         }
     }
 
-    protected void addSlot(IItemHandler itemHandler, int xPos, int yPos){
-        addSlot(new SlotItemHandler(itemHandler, index, xPos, yPos));
+    protected void addSlot(IItemHandler dataInventory, int xPos, int yPos){
+        addSlot(new SlotItemHandler(dataInventory, index, xPos, yPos));
         index++;
     }
     protected void addXCenteredSlot(IItemHandler itemHandler, int yPos){

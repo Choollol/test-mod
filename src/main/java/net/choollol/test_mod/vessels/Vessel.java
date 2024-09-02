@@ -5,14 +5,14 @@ import net.minecraft.resources.ResourceLocation;
 
 public class Vessel {
     protected String name;
-    protected ResourceLocation id;
+    protected ResourceLocation path;
 
-    protected Vessel(String name, String id){
+    protected Vessel(String name, String path){
         this.name = name;
-        this.id = ModUtil.idFromPath(id);
+        this.path = ModUtil.idFromPath(path);
     }
 
     public String getName() {return name;}
-    public ResourceLocation getId() {return id;}
-    public String getPath() {return id.toString().split(":")[1];}
+    public ResourceLocation getPath() {return path;}
+    public String getId() {return path.toString().split(":")[1];}
 }

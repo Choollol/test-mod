@@ -21,7 +21,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ModItems {
-    public enum ModelType{
+    public enum ItemModelType {
         SIMPLE, HANDHELD
     }
 
@@ -30,17 +30,17 @@ public class ModItems {
     public static final HashMap<ResourceLocation, ItemVessel<? extends Item>> ITEM_MAP = new HashMap<>();
 
     public static final ItemVessel<Item> TEST_ITEM_1 = registerItem("Test Item 1", "test_item_1",
-            ModelType.SIMPLE,
+            ItemModelType.SIMPLE,
             ItemParameters.of().itemConstructor(Item::new).addTags(Tags.Items.COBBLESTONE, Tags.Items.DYES_BLUE));
 
     public static final ItemVessel<Test_Item_2> TEST_ITEM_2 = registerItem("Test Item 2", "test_item_2",
-            ModelType.HANDHELD,
+            ItemModelType.HANDHELD,
             ItemParameters.of().itemConstructor(() -> new Test_Item_2(Tiers.DIAMOND,
                     20, 5,
                     new SwordItem.Properties().durability(16)))
                     .addTags(ItemTags.COALS));
 
-    public static <T extends Item> ItemVessel<T> registerItem(String name, String id, ModelType modelType,
+    public static <T extends Item> ItemVessel<T> registerItem(String name, String id, ItemModelType modelType,
                                                               ItemParameters<T> parameters, boolean doAddToMap){
         ItemVessel<T> itemVessel = new ItemVessel<T>(
                 name, id,
@@ -53,18 +53,18 @@ public class ModItems {
         return itemVessel;
     }
     //Adds to map
-    public static <T extends Item> ItemVessel<T> registerItem(String name, String id, ModelType modelType,
+    public static <T extends Item> ItemVessel<T> registerItem(String name, String id, ItemModelType modelType,
                                                               ItemParameters<T> parameters){
         return registerItem(name, id, modelType, parameters, true);
     }
     //ModelType.SIMPLE
     public static <T extends Item> ItemVessel<T> registerItem(String name, String id, ItemParameters<T> parameters){
-        return registerItem(name, id, ModelType.SIMPLE, parameters);
+        return registerItem(name, id, ItemModelType.SIMPLE, parameters);
     }
     //Does not add to map
     public static <T extends Item> ItemVessel<T> registerBlockItem(String name, String id,
                                                                    ItemParameters<T> parameters){
-        return registerItem(name, id, ModelType.SIMPLE, parameters, false);
+        return registerItem(name, id, ItemModelType.SIMPLE, parameters, false);
     }
 
     public static void register(IEventBus eventBus){

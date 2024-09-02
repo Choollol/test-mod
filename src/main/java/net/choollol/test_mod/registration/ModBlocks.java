@@ -25,6 +25,13 @@ import java.util.function.Supplier;
 
 public class ModBlocks {
 
+    public enum BlockModelType{
+        CUBE_ALL, CUBE_COLUMN
+    }
+    public enum LootTableType{
+        DROP_SELF
+    }
+
     /*
     ADDING NEW BLOCK
 
@@ -49,11 +56,15 @@ public class ModBlocks {
             BlockParameters.defaultStone().blockConstructor(Test_Block_2::new).destroyTime(6f),
             new TagKey[]{Tags.Items.INGOTS_IRON});
 
+    public static final BlockVessel<TestBarrel> TEST_BARREL = registerBlock("Test Barrel", "test_barrel",
+            BlockParameters.defaultStone().blockConstructor(TestBarrel::new).modelType(BlockModelType.CUBE_COLUMN),
+            new TagKey[]{});
+
     private static <T extends Block> BlockVessel<T> registerBlock(String name, String id, BlockParameters<T> parameters,
                                                                   TagKey<Item>[] itemTags){
         BlockVessel<T> blockVessel = new BlockVessel<T>(name, id,
                 BLOCKS.registerBlock(id, parameters.blockConstructor, parameters.properties),
-                parameters.tags
+                parameters.tags, parameters.modelType, parameters.lootTableType
         );
         BLOCK_MAP.put(ModUtil.idFromPath(id), blockVessel);
         ItemVessel<BlockItem> itemVessel = registerBlockItem(blockVessel, Arrays.asList(itemTags));
@@ -63,7 +74,7 @@ public class ModBlocks {
 
     private static <T extends Block> ItemVessel<BlockItem> registerBlockItem(BlockVessel<T> blockVessel,
                                                                              List<TagKey<Item>> tags){
-        ItemVessel<BlockItem> itemVessel = ModItems.registerBlockItem(blockVessel.getName(), blockVessel.getPath(),
+        ItemVessel<BlockItem> itemVessel = ModItems.registerBlockItem(blockVessel.getName(), blockVessel.getId(),
                 ModItems.ItemParameters.of().itemConstructor(() -> new BlockItem(blockVessel.asBlock(),
                         new Item.Properties()))
                         .addTags(tags));
@@ -80,6 +91,8 @@ public class ModBlocks {
         public final BlockBehaviour.Properties properties;
         public final List<TagKey<Block>> tags = new ArrayList<>();
         public Function<BlockBehaviour.Properties, T> blockConstructor;
+        public BlockModelType modelType = BlockModelType.CUBE_ALL;
+        public LootTableType lootTableType = LootTableType.DROP_SELF;
 
         protected BlockParameters(BlockBehaviour.Properties properties,
                                   Function<BlockBehaviour.Properties, T> blockConstructor,
@@ -132,6 +145,14 @@ public class ModBlocks {
 
         public BlockParameters<T> requiresCorrectToolForDrops() {
             this.properties.requiresCorrectToolForDrops();
+            return this;
+        }
+        public BlockParameters<T> modelType(BlockModelType modelType){
+            this.modelType = modelType;
+            return this;
+        }
+        public BlockParameters<T> lootTableType(LootTableType lootTableType){
+            this.lootTableType = lootTableType;
             return this;
         }
     }

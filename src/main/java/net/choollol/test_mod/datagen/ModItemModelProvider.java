@@ -17,12 +17,12 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         for (var itemVessel : ModItems.ITEM_MAP.values()){
-            ModItems.ModelType modelType = itemVessel.getModelType();
-            if (modelType == ModItems.ModelType.SIMPLE) {
-                simpleItem(itemVessel.getPath(), "layer0");
+            ModItems.ItemModelType modelType = itemVessel.getModelType();
+            if (modelType == ModItems.ItemModelType.SIMPLE) {
+                simpleItem(itemVessel.getId(), "layer0");
             }
-            else if (modelType == ModItems.ModelType.HANDHELD){
-                itemHandheld(itemVessel.getPath(), "layer0");
+            else if (modelType == ModItems.ItemModelType.HANDHELD){
+                itemHandheld(itemVessel.getId(), "layer0");
             }
         }
     }
