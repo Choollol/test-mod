@@ -10,6 +10,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class TestBarrelEntity extends ModInventoryBlockEntity {
+
+    public static final int SLOT_COUNT = 2;
+
     // ItemStackHandler indices
     private final int STACK_SIZE_MODIFIER = 0;
     private final int ITEM_STACK = 1;

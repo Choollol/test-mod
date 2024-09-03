@@ -13,12 +13,13 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class ModInventoryBlockEntity extends ModBlockEntity {
 
-    public static final int SLOT_COUNT = 2;
+    public static final int SLOT_COUNT = 1;
 
-    protected ItemStackHandler itemStackHandler = new ItemStackHandler(SLOT_COUNT);
+    protected ItemStackHandler itemStackHandler;
 
     public ModInventoryBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
         super(pType, pPos, pBlockState);
+        itemStackHandler = new ItemStackHandler(SLOT_COUNT);
     }
     public void drops(){
         SimpleContainer inventory = new SimpleContainer(itemStackHandler.getSlots());
@@ -38,4 +39,6 @@ public class ModInventoryBlockEntity extends ModBlockEntity {
         super.load(pTag);
         itemStackHandler.deserializeNBT(pTag.getCompound("inventory"));
     }
+
+    public ItemStackHandler getItemStackHandler() { return itemStackHandler; }
 }

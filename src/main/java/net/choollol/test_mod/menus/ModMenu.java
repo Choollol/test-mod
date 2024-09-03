@@ -1,5 +1,7 @@
 package net.choollol.test_mod.menus;
 
+import net.choollol.test_mod.blocks.blockentities.ModBlockEntity;
+import net.choollol.test_mod.blocks.blockentities.ModInventoryBlockEntity;
 import net.choollol.test_mod.vessels.BlockVessel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -17,7 +19,7 @@ public class ModMenu extends AbstractContainerMenu {
     private int index = 0;
 
     protected Level level;
-    protected BlockEntity blockEntity;
+    protected ModInventoryBlockEntity inventoryBlockEntity;
 
     protected final ContainerLevelAccess access;
 
@@ -101,7 +103,7 @@ public class ModMenu extends AbstractContainerMenu {
     }
 
     protected void addSlot(IItemHandler dataInventory, int xPos, int yPos){
-        addSlot(new SlotItemHandler(dataInventory, index, xPos, yPos));
+        super.addSlot(new SlotItemHandler(dataInventory, index, xPos, yPos));
         index++;
     }
     protected void addXCenteredSlot(IItemHandler itemHandler, int yPos){

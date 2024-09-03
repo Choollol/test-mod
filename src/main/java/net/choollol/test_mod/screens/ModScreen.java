@@ -1,5 +1,6 @@
 package net.choollol.test_mod.screens;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.choollol.test_mod.TM;
 import net.choollol.test_mod.menus.ModMenu;
 import net.minecraft.client.gui.GuiGraphics;
@@ -26,7 +27,8 @@ public class ModScreen <T extends ModMenu> extends AbstractContainerScreen<T> {
 
     @Override
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
-        pGuiGraphics.blitSprite(backgroundTexture, (width - imageWidth) / 2,
-                (height - imageHeight) / 2, imageWidth, imageHeight);
+        /*pGuiGraphics.blitSprite(backgroundTexture, (width - imageWidth) / 2,
+                (height - imageHeight) / 2, imageWidth, imageHeight);*/
+        pGuiGraphics.blitSprite(backgroundTexture, 0, 0, 256, 256);
     }
 }
