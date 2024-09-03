@@ -9,9 +9,4 @@ public class TestBarrelScreen extends ModScreen<TestBarrelMenu> {
     public TestBarrelScreen(TestBarrelMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
     }
-
-    @Override
-    protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
-
-    }
 }

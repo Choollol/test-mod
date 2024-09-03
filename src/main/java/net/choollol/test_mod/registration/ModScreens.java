@@ -1,6 +1,7 @@
 package net.choollol.test_mod.registration;
 
 import net.choollol.test_mod.screens.TestBarrelScreen;
+import net.minecraft.world.inventory.MenuType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;

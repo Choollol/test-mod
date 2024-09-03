@@ -22,7 +22,7 @@ public class ModBlockEntity extends BlockEntity implements MenuProvider {
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("menu.title." + TM.ID + menuName);
+        return Component.translatable("menu.title." + TM.ID + "." + menuName);
     }
 
     @Override

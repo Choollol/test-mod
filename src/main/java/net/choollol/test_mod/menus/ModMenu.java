@@ -15,11 +15,12 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class ModMenu extends AbstractContainerMenu {
+    private static final int screenHalfWidth = 88;
 
     private int index = 0;
 
     protected Level level;
-    protected ModInventoryBlockEntity inventoryBlockEntity;
+    public BlockEntity blockEntity;
 
     protected final ContainerLevelAccess access;
 
@@ -46,7 +47,7 @@ public class ModMenu extends AbstractContainerMenu {
     private static final int VANILLA_FIRST_SLOT_INDEX = 0;
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
-    private static final int TE_INVENTORY_SLOT_COUNT = 2;
+    protected static final int TE_INVENTORY_SLOT_COUNT = 2;
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);
@@ -107,6 +108,6 @@ public class ModMenu extends AbstractContainerMenu {
         index++;
     }
     protected void addXCenteredSlot(IItemHandler itemHandler, int yPos){
-        addSlot(itemHandler, 128 - 18 / 2, yPos);
+        addSlot(itemHandler, screenHalfWidth - 18 / 2, yPos);
     }
 }

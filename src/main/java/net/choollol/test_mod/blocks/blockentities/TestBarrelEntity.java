@@ -23,7 +23,9 @@ public class TestBarrelEntity extends ModInventoryBlockEntity {
     }
 
     @Override
-    public @Nullable AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new TestBarrelMenu(pContainerId, pPlayerInventory, itemStackHandler);
+    public @Nullable TestBarrelMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
+        TestBarrelMenu menu = new TestBarrelMenu(pContainerId, pPlayerInventory, itemStackHandler);
+        menu.blockEntity = this;
+        return menu;
     }
 }
