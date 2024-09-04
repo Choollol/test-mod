@@ -24,19 +24,50 @@ public class ModMenu extends AbstractContainerMenu {
 
     protected final ContainerLevelAccess access;
 
-    public ModMenu(MenuType<?> pMenuType, int pContainerId, Inventory inv, int slotCount) {
-        this(pMenuType, pContainerId, inv, new ItemStackHandler(slotCount), ContainerLevelAccess.NULL);
-    }
-    public ModMenu(MenuType<?> pMenuType, int pContainerId, Inventory inv, IItemHandler dataInventory) {
-        this(pMenuType, pContainerId, inv, dataInventory, ContainerLevelAccess.NULL);
+    /*public ModMenu(MenuType<?> pMenuType, int pContainerId, Inventory inv, int slotCount, int guiHeight) {
+        this(pMenuType, pContainerId, inv, new ItemStackHandler(slotCount), ContainerLevelAccess.NULL, guiHeight);
+    }*/
+    public ModMenu(MenuType<?> pMenuType, int pContainerId, Inventory inv, IItemHandler itemHandler,
+                   int guiHeight) {
+        this(pMenuType, pContainerId, inv, itemHandler, ContainerLevelAccess.NULL, guiHeight);
     }
     public ModMenu(MenuType<?> menuType, int containerId, Inventory inv,
-                   IItemHandler dataInventory, ContainerLevelAccess containerLevelAccess){
+                   IItemHandler itemHandler, ContainerLevelAccess containerLevelAccess, int guiHeight){
         super(menuType, containerId);
-        index = 0;
-        addPlayerInventoryAndHotbar(inv);
+        //index = 0;
+        addPlayerInventoryAndHotbar(inv, guiHeight - 1);
         this.access = containerLevelAccess;
         //addDataSlot(dataSingle);
+    }
+
+    @Override
+    public boolean stillValid(Player pPlayer) {
+        return false;
+    }
+
+    public <T extends Block> boolean stillValid(Player pPlayer, BlockVessel<T> blockVessel) {
+        /*return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
+                pPlayer, blockVessel.asBlock());*/
+        return AbstractContainerMenu.stillValid(access, pPlayer, blockVessel.asBlock());
+    }
+
+    private void addPlayerInventoryAndHotbar(Inventory playerInventory, int baseY) {
+        for (int i = 0; i < 3; i++) {
+            for (int l = 0; l < 9; l++) {
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, baseY + i * 18));
+            }
+        }
+        for (int i = 0; i < 9; i++) {
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, baseY + 18 * 3 + 4));
+        }
+    }
+
+    protected void addSlot(IItemHandler itemHandler, int xPos, int yPos){
+        super.addSlot(new SlotItemHandler(itemHandler, index, xPos, yPos));
+        index++;
+    }
+    protected void addXCenteredSlot(IItemHandler itemHandler, int yPos){
+        addSlot(itemHandler, screenHalfWidth - 18 / 2, yPos);
     }
 
     private static final int HOTBAR_SLOT_COUNT = 9;
@@ -82,32 +113,71 @@ public class ModMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player pPlayer) {
-        return false;
-    }
+    protected boolean moveItemStackTo(ItemStack pStack, int pStartIndex, int pEndIndex, boolean pReverseDirection) {
+        boolean flag = false;
+        int i = pStartIndex;
+        if (pReverseDirection) {
+            i = pEndIndex - 1;
+        }
 
-    public <T extends Block> boolean stillValid(Player pPlayer, BlockVessel<T> blockVessel) {
-        /*return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                pPlayer, blockVessel.asBlock());*/
-        return AbstractContainerMenu.stillValid(access, pPlayer, blockVessel.asBlock());
-    }
+        if (pStack.isStackable()) {
+            while(!pStack.isEmpty() && (pReverseDirection ? i >= pStartIndex : i < pEndIndex)) {
+                Slot slot = this.slots.get(i);
+                ItemStack itemstack = slot.getItem();
+                if (!itemstack.isEmpty() && ItemStack.isSameItemSameTags(pStack, itemstack)) {
+                    int j = itemstack.getCount() + pStack.getCount();
+                    int maxSize = Math.min(slot.getMaxStackSize(itemstack), pStack.getMaxStackSize());
+                    if (j <= maxSize) {
+                        pStack.setCount(0);
+                        itemstack.setCount(j);
+                        slot.setChanged();
+                        flag = true;
+                    } else if (itemstack.getCount() < maxSize) {
+                        pStack.shrink(maxSize - itemstack.getCount());
+                        itemstack.setCount(maxSize);
+                        slot.setChanged();
+                        flag = true;
+                    }
+                }
 
-    private void addPlayerInventoryAndHotbar(Inventory playerInventory) {
-        for (int i = 0; i < 3; ++i) {
-            for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
+                if (pReverseDirection) {
+                    --i;
+                } else {
+                    ++i;
+                }
             }
         }
-        for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
-        }
-    }
 
-    protected void addSlot(IItemHandler dataInventory, int xPos, int yPos){
-        super.addSlot(new SlotItemHandler(dataInventory, index, xPos, yPos));
-        index++;
-    }
-    protected void addXCenteredSlot(IItemHandler itemHandler, int yPos){
-        addSlot(itemHandler, screenHalfWidth - 18 / 2, yPos);
+        if (!pStack.isEmpty()) {
+            if (pReverseDirection) {
+                i = pEndIndex - 1;
+            } else {
+                i = pStartIndex;
+            }
+
+            while(pReverseDirection ? i >= pStartIndex : i < pEndIndex) {
+                Slot slot1 = this.slots.get(i);
+                ItemStack itemstack1 = slot1.getItem();
+                if (itemstack1.isEmpty() && slot1.mayPlace(pStack)) {
+                    if (pStack.getCount() > slot1.getMaxStackSize()) {
+                        slot1.setByPlayer(pStack.split(slot1.getMaxStackSize()));
+                    } else {
+                        slot1.setByPlayer(pStack.split(pStack.getCount()));
+                    }
+
+                    slot1.setChanged();
+                    flag = true;
+                    break;
+                }
+
+                if (pReverseDirection) {
+                    --i;
+                } else {
+                    ++i;
+                }
+            }
+        }
+
+        return flag;
     }
 }

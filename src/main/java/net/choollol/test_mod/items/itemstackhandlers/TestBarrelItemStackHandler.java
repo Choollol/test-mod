@@ -1,6 +1,5 @@
 package net.choollol.test_mod.items.itemstackhandlers;
 
-import net.choollol.test_mod.blocks.blockentities.TestBarrelEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -12,8 +11,8 @@ import java.util.List;
 
 public class TestBarrelItemStackHandler extends ItemStackHandler {
 
-    private int stackLimit = 32;
-    private int[] stackLimits = { 64, 128, 256 };
+    private int stackLimit = 8;
+    private int[] stackLimits = { 16, 32, 64 };
 
     private List<Item> stackLimitUpgrades = new ArrayList<>();
 
@@ -25,7 +24,12 @@ public class TestBarrelItemStackHandler extends ItemStackHandler {
 
     @Override
     protected int getStackLimit(int slot, ItemStack stack){
-        return stackLimit;
+        if (slot == 1) {
+            return stackLimit;
+        }
+        else {
+            return 1;
+        }
     }
 
     @Override
@@ -42,6 +46,9 @@ public class TestBarrelItemStackHandler extends ItemStackHandler {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
+        if (stack.isEmpty()){
+            return true;
+        }
         if (slot == 0){
             for (Item stackLimitUpgrade : stackLimitUpgrades) {
                 if (stack.getItem().equals(stackLimitUpgrade)) {

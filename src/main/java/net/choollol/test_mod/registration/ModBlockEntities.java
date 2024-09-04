@@ -1,7 +1,7 @@
 package net.choollol.test_mod.registration;
 
 import net.choollol.test_mod.TM;
-import net.choollol.test_mod.blocks.blockentities.TestBarrelEntity;
+import net.choollol.test_mod.blocks.blockentities.TestBarrelBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -16,7 +16,7 @@ public class ModBlockEntities {
         BLOCK_ENTITIES.register(eventBus);
     }
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TestBarrelEntity>> TEST_BARREL_BE =
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TestBarrelBlockEntity>> TEST_BARREL_BE =
             BLOCK_ENTITIES.register("test_barrel",
-                    () -> BlockEntityType.Builder.of(TestBarrelEntity::new, ModBlocks.TEST_BLOCK_1.asBlock()).build(null));
+                    () -> BlockEntityType.Builder.of(TestBarrelBlockEntity::new, ModBlocks.TEST_BLOCK_1.asBlock()).build(null));
 }

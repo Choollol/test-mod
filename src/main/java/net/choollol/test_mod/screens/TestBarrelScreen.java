@@ -6,7 +6,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
 public class TestBarrelScreen extends ModScreen<TestBarrelMenu> {
+
     public TestBarrelScreen(TestBarrelMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
+        guiHeight = TestBarrelMenu.guiHeight;
     }
 }
