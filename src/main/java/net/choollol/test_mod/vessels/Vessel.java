@@ -9,7 +9,7 @@ public class Vessel {
 
     protected Vessel(String name, String path){
         this.name = name;
-        this.path = ModUtil.idFromPath(path);
+        this.path = ModUtil.pathFromId(path);
     }
 
     public String getName() {return name;}

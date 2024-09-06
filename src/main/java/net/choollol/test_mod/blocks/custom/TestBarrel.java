@@ -1,7 +1,11 @@
 package net.choollol.test_mod.blocks.custom;
 
+import net.choollol.test_mod.TM;
 import net.choollol.test_mod.blocks.blockentities.TestBarrelBlockEntity;
+import net.choollol.test_mod.menus.TestBarrelMenu;
+import net.choollol.test_mod.util.ModUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -17,9 +21,12 @@ public class TestBarrel extends Block implements EntityBlock {
         super(p_49795_);
     }
 
+    private TestBarrelBlockEntity blockEntity;
+
     @Override
     public @Nullable TestBarrelBlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new TestBarrelBlockEntity(pPos, pState);
+        blockEntity = new TestBarrelBlockEntity(pPos, pState);
+        return blockEntity;
     }
 
     @Override
@@ -27,7 +34,7 @@ public class TestBarrel extends Block implements EntityBlock {
         if (pLevel.isClientSide()){
             return InteractionResult.SUCCESS;
         }
-        pPlayer.openMenu(newBlockEntity(pPos, pState));
+        pPlayer.openMenu(TestBarrelMenu.getServerMenuProvider(blockEntity, pPos));
         return InteractionResult.CONSUME;
     }
 

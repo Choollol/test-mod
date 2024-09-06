@@ -1,4 +1,4 @@
-package net.choollol.test_mod.items.custom;
+package net.choollol.test_mod.items;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;

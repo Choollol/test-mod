@@ -2,7 +2,7 @@ package net.choollol.test_mod.registration;
 
 import net.choollol.test_mod.TM;
 import net.choollol.test_mod.vessels.ItemVessel;
-import net.choollol.test_mod.items.custom.Test_Item_2;
+import net.choollol.test_mod.items.Test_Item_2;
 import net.choollol.test_mod.util.ModUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -48,7 +48,7 @@ public class ModItems {
                 parameters.tags
         );
         if (doAddToMap) {
-            ITEM_MAP.put(ModUtil.idFromPath(id), itemVessel);
+            ITEM_MAP.put(ModUtil.pathFromId(id), itemVessel);
         }
         return itemVessel;
     }

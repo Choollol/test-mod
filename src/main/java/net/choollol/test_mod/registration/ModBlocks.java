@@ -66,7 +66,7 @@ public class ModBlocks {
                 BLOCKS.registerBlock(id, parameters.blockConstructor, parameters.properties),
                 parameters.tags, parameters.modelType, parameters.lootTableType
         );
-        BLOCK_MAP.put(ModUtil.idFromPath(id), blockVessel);
+        BLOCK_MAP.put(ModUtil.pathFromId(id), blockVessel);
         ItemVessel<BlockItem> itemVessel = registerBlockItem(blockVessel, Arrays.asList(itemTags));
         blockVessel.setBlockItemVessel(itemVessel);
         return blockVessel;

@@ -1,4 +1,4 @@
-package net.choollol.test_mod.items.itemstackhandlers;
+package net.choollol.test_mod.itemstackhandlers;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -11,13 +11,15 @@ import java.util.List;
 
 public class TestBarrelItemStackHandler extends ItemStackHandler {
 
+    public static final int SLOT_COUNT = 2;
+
     private int stackLimit = 8;
     private int[] stackLimits = { 16, 32, 64 };
 
     private List<Item> stackLimitUpgrades = new ArrayList<>();
 
-    public TestBarrelItemStackHandler(int size){
-        super(size);
+    public TestBarrelItemStackHandler(){
+        super(SLOT_COUNT);
         Item[] upgrades = { Items.IRON_BLOCK, Items.GOLD_BLOCK, Items.DIAMOND_BLOCK };
         stackLimitUpgrades.addAll(Arrays.asList(upgrades));
     }

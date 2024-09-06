@@ -1,7 +1,10 @@
 package net.choollol.test_mod.menus;
 
+import net.choollol.test_mod.TM;
 import net.choollol.test_mod.blocks.blockentities.ModBlockEntity;
 import net.choollol.test_mod.blocks.blockentities.ModInventoryBlockEntity;
+import net.choollol.test_mod.registration.ModBlockEntities;
+import net.choollol.test_mod.util.ModUtil;
 import net.choollol.test_mod.vessels.BlockVessel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -9,35 +12,34 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class ModMenu extends AbstractContainerMenu {
-    private static final int screenHalfWidth = 88;
+    private static final int SCREEN_HALF_WIDTH = 176 / 2;
+    protected static final String BASE_PATH = "menu.title." + TM.ID + ".";
 
     private int index = 0;
 
     protected Level level;
-    public BlockEntity blockEntity;
-
     protected final ContainerLevelAccess access;
+    protected int slotCount = 0;
+    protected ModInventoryBlockEntity blockEntity;
 
-    /*public ModMenu(MenuType<?> pMenuType, int pContainerId, Inventory inv, int slotCount, int guiHeight) {
-        this(pMenuType, pContainerId, inv, new ItemStackHandler(slotCount), ContainerLevelAccess.NULL, guiHeight);
-    }*/
-    public ModMenu(MenuType<?> pMenuType, int pContainerId, Inventory inv, IItemHandler itemHandler,
-                   int guiHeight) {
-        this(pMenuType, pContainerId, inv, itemHandler, ContainerLevelAccess.NULL, guiHeight);
+    public ModMenu(MenuType<?> pMenuType, int pContainerId, Inventory inv, int guiHeight) {
+        this(pMenuType, pContainerId, inv, ContainerLevelAccess.NULL, guiHeight);
     }
     public ModMenu(MenuType<?> menuType, int containerId, Inventory inv,
-                   IItemHandler itemHandler, ContainerLevelAccess containerLevelAccess, int guiHeight){
+                   ContainerLevelAccess containerLevelAccess, int guiHeight){
         super(menuType, containerId);
-        //index = 0;
         addPlayerInventoryAndHotbar(inv, guiHeight - 1);
         this.access = containerLevelAccess;
-        //addDataSlot(dataSingle);
+    }
+
+    protected ModMenu setBlockEntity(ModInventoryBlockEntity blockEntity){
+        this.blockEntity = blockEntity;
+        return this;
     }
 
     @Override
@@ -67,7 +69,7 @@ public class ModMenu extends AbstractContainerMenu {
         index++;
     }
     protected void addXCenteredSlot(IItemHandler itemHandler, int yPos){
-        addSlot(itemHandler, screenHalfWidth - 18 / 2, yPos);
+        addSlot(itemHandler, SCREEN_HALF_WIDTH - 18 / 2, yPos);
     }
 
     private static final int HOTBAR_SLOT_COUNT = 9;
@@ -78,7 +80,6 @@ public class ModMenu extends AbstractContainerMenu {
     private static final int VANILLA_FIRST_SLOT_INDEX = 0;
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
-    protected static final int TE_INVENTORY_SLOT_COUNT = 2;
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);
@@ -90,10 +91,10 @@ public class ModMenu extends AbstractContainerMenu {
         if (pIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
             // This is a vanilla container slot so merge the stack into the tile inventory
             if (!moveItemStackTo(sourceStack, TE_INVENTORY_FIRST_SLOT_INDEX, TE_INVENTORY_FIRST_SLOT_INDEX
-                    + TE_INVENTORY_SLOT_COUNT, false)) {
+                    + slotCount, false)) {
                 return ItemStack.EMPTY;  // EMPTY_ITEM
             }
-        } else if (pIndex < TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT) {
+        } else if (pIndex < TE_INVENTORY_FIRST_SLOT_INDEX + slotCount) {
             // This is a TE slot so merge the stack into the players inventory
             if (!moveItemStackTo(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)) {
                 return ItemStack.EMPTY;
@@ -127,6 +128,9 @@ public class ModMenu extends AbstractContainerMenu {
                 if (!itemstack.isEmpty() && ItemStack.isSameItemSameTags(pStack, itemstack)) {
                     int j = itemstack.getCount() + pStack.getCount();
                     int maxSize = Math.min(slot.getMaxStackSize(itemstack), pStack.getMaxStackSize());
+                    if (i < blockEntity.getItemStackHandler().getSlots()) {
+                        maxSize = Math.min(maxSize, blockEntity.getItemStackHandler().getSlotLimit(i));
+                    }
                     if (j <= maxSize) {
                         pStack.setCount(0);
                         itemstack.setCount(j);
@@ -158,9 +162,13 @@ public class ModMenu extends AbstractContainerMenu {
             while(pReverseDirection ? i >= pStartIndex : i < pEndIndex) {
                 Slot slot1 = this.slots.get(i);
                 ItemStack itemstack1 = slot1.getItem();
+                int maxSize = Math.min(slot1.getMaxStackSize(itemstack1), pStack.getMaxStackSize());
+                if (i < blockEntity.getItemStackHandler().getSlots()) {
+                    maxSize = Math.min(maxSize, blockEntity.getItemStackHandler().getSlotLimit(i));
+                }
                 if (itemstack1.isEmpty() && slot1.mayPlace(pStack)) {
-                    if (pStack.getCount() > slot1.getMaxStackSize()) {
-                        slot1.setByPlayer(pStack.split(slot1.getMaxStackSize()));
+                    if (pStack.getCount() > maxSize) {
+                        slot1.setByPlayer(pStack.split(maxSize));
                     } else {
                         slot1.setByPlayer(pStack.split(pStack.getCount()));
                     }

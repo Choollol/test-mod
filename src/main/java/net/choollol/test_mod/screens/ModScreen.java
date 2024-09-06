@@ -1,21 +1,22 @@
 package net.choollol.test_mod.screens;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.choollol.test_mod.TM;
 import net.choollol.test_mod.menus.ModMenu;
+import net.choollol.test_mod.util.ModUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
 
 public class ModScreen <T extends ModMenu> extends AbstractContainerScreen<T> {
 
     protected int guiHeight;
 
     protected String textureBasePath = "textures/gui/";
-    protected ResourceLocation backgroundTexture = new ResourceLocation(TM.ID, textureBasePath + "menu_background.png");
+    protected ResourceLocation backgroundTexture = ModUtil.pathFromId(textureBasePath + "menu_background.png");
+    protected ResourceLocation slotTexture = ModUtil.pathFromId(textureBasePath + "slot.png");
 
     public ModScreen(T pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -26,6 +27,14 @@ public class ModScreen <T extends ModMenu> extends AbstractContainerScreen<T> {
         this.imageHeight = 4 + guiHeight + 84;
         super.init();
         this.inventoryLabelY = this.imageHeight - 104;
+        this.titleLabelY = 4;
+    }
+
+    @Override
+    protected void renderSlot(GuiGraphics guiGraphics, Slot slot) {
+        guiGraphics.blit(slotTexture, slot.x - 1, slot.y - 1,
+                0, 0, 18, 18, 18, 18);
+        super.renderSlot(guiGraphics, slot);
     }
 
     @Override
@@ -36,22 +45,22 @@ public class ModScreen <T extends ModMenu> extends AbstractContainerScreen<T> {
 
     @Override
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
-        drawBackground(pGuiGraphics, guiHeight);
+        drawBackground(pGuiGraphics);
     }
 
-    protected void drawBackground(GuiGraphics guiGraphics, int middleHeight){
+    // Full guiHeight = 168
+    protected void drawBackground(GuiGraphics guiGraphics){
         int invHeight = 84;
         int topHeight = 4;
-        int imageWidth = 256;
-        int x = (width - imageWidth) / 2;
-        int y = (256 - invHeight - middleHeight - topHeight) / 2;
-
+        int menuWidth = 176;
+        int menuX = (width - menuWidth) / 2;
+        int menuY = (256 - invHeight - guiHeight - topHeight) / 2;
         // Top
-        guiGraphics.blit(backgroundTexture, x, y, 0, 0, imageWidth, topHeight);
+        guiGraphics.blit(backgroundTexture, menuX, menuY, 0, 0, menuWidth, topHeight, menuWidth, 256);
         // Middle
-        guiGraphics.blit(backgroundTexture, x, y + topHeight, 0, topHeight, imageWidth, middleHeight);
+        guiGraphics.blit(backgroundTexture, menuX, menuY + topHeight, 0, topHeight, menuWidth, guiHeight, menuWidth, 256);
         // Inventory
-        guiGraphics.blit(backgroundTexture, x, y + topHeight + middleHeight, 0,
-                168 + topHeight, imageWidth, invHeight);
+        guiGraphics.blit(backgroundTexture, menuX, menuY + topHeight + guiHeight, 0,
+                168 + topHeight, menuWidth, invHeight, menuWidth, 256);
     }
 }
